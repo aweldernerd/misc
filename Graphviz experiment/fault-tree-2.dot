@@ -1,0 +1,217 @@
+digraph FaultTree {
+    rankdir=LR;
+    node [shape=box];
+
+    // Basic events
+    PowerOutage [label="External Power Outage"];
+    BatteryDepleted [label="Battery Depleted"];
+    PowerSupplyUnit [label="Internal Power Supply Unit Fault"];
+    SensorFailure [label="Sensor Failure"];
+    CircuitFailure [label="Circuit Board Failure"];
+    ActuatorFailure [label="Actuator Failure"];
+    IncorrectSetup [label="Incorrect Setup"];
+    Misuse [label="Improper Operation"];
+    LackOfTraining [label="Lack of Training"];
+    FirmwareBug [label="Firmware Bug"];
+    DataCorruption [label="Data Corruption"];
+    UpdateFailure [label="Failed Software Update"];
+    Overheating [label="Overheating"];
+    Moisture [label="Moisture Ingress"];
+    EMI [label="Electromagnetic Interference"];
+
+    // Intermediate events
+    PowerFailure [label="Power Supply Failure"];
+    ComponentFailure [label="Critical Component Failure"];
+    UserError [label="User Error"];
+    SoftwareError [label="Software Malfunction"];
+    Environmental [label="Adverse Environmental Conditions"];
+
+    // Top event
+    Failure [label="Medical Equipment Failure", shape=ellipse, style=filled, fillcolor=red];
+
+    // Fault tree structure (bottom-up)
+    PowerOutage -> PowerFailure;
+    BatteryDepleted -> PowerFailure;
+    PowerSupplyUnit -> PowerFailure;
+
+    SensorFailure -> ComponentFailure;
+    CircuitFailure -> ComponentFailure;
+    ActuatorFailure -> ComponentFailure;
+
+    IncorrectSetup -> UserError;
+    Misuse -> UserError;
+    LackOfTraining -> UserError;
+
+    FirmwareBug -> SoftwareError;
+    DataCorruption -> SoftwareError;
+    UpdateFailure -> SoftwareError;
+
+    Overheating -> Environmental;
+    Moisture -> Environmental;
+    EMI -> Environmental;
+
+    PowerFailure -> Failure;
+    ComponentFailure -> Failure;
+    UserError -> Failure;
+    SoftwareError -> Failure;
+    Environmental -> Failure;
+}
+
+digraph Bowtie {
+    rankdir=LR;
+    node [shape=box];
+
+    // Threats (basic events)
+    PowerOutage [label="External Power Outage"];
+    BatteryDepleted [label="Battery Depleted"];
+    PowerSupplyUnit [label="Internal Power Supply Unit Fault"];
+    SensorFailure [label="Sensor Failure"];
+    CircuitFailure [label="Circuit Board Failure"];
+    ActuatorFailure [label="Actuator Failure"];
+    IncorrectSetup [label="Incorrect Setup"];
+    Misuse [label="Improper Operation"];
+    LackOfTraining [label="Lack of Training"];
+    FirmwareBug [label="Firmware Bug"];
+    DataCorruption [label="Data Corruption"];
+    UpdateFailure [label="Failed Software Update"];
+    Overheating [label="Overheating"];
+    Moisture [label="Moisture Ingress"];
+    EMI [label="Electromagnetic Interference"];
+
+    // Fault tree intermediates
+    PowerFailure [label="Power Supply Failure"];
+    ComponentFailure [label="Critical Component Failure"];
+    UserError [label="User Error"];
+    SoftwareError [label="Software Malfunction"];
+    Environmental [label="Adverse Environmental Conditions"];
+
+    // Top event
+    Failure [label="Medical Equipment Failure", shape=ellipse, style=filled, fillcolor=red];
+
+    // Consequences
+    PatientHarm [label="Patient Harm", shape=box, style=filled, fillcolor=pink];
+    DataLoss [label="Data Loss", shape=box, style=filled, fillcolor=lightgrey];
+    ServiceInterruption [label="Service Interruption", shape=box, style=filled, fillcolor=lightgrey];
+
+    // Preventive barriers (left side)
+    BackupGenerator [label="Backup Generator", shape=note, style=filled, fillcolor=lightyellow];
+    BatteryMaintenance [label="Battery Maintenance", shape=note, style=filled, fillcolor=lightyellow];
+    RedundantPSU [label="Redundant Power Supply", shape=note, style=filled, fillcolor=lightyellow];
+    SensorMonitoring [label="Sensor Monitoring", shape=note, style=filled, fillcolor=lightyellow];
+    PCBQuality [label="PCB Quality Control", shape=note, style=filled, fillcolor=lightyellow];
+    ActuatorRedundancy [label="Actuator Redundancy", shape=note, style=filled, fillcolor=lightyellow];
+    SetupChecklist [label="Setup Checklist", shape=note, style=filled, fillcolor=lightyellow];
+    UserInstructions [label="User Instructions", shape=note, style=filled, fillcolor=lightyellow];
+    TrainingProgram [label="Training Program", shape=note, style=filled, fillcolor=lightyellow];
+    CodeReview [label="Code Review & Testing", shape=note, style=filled, fillcolor=lightyellow];
+    DataChecks [label="Data Integrity Checks", shape=note, style=filled, fillcolor=lightyellow];
+    UpdateRollback [label="Update Rollback", shape=note, style=filled, fillcolor=lightyellow];
+    ThermalMgmt [label="Thermal Management", shape=note, style=filled, fillcolor=lightyellow];
+    SealedEnclosure [label="Sealed Enclosure", shape=note, style=filled, fillcolor=lightyellow];
+    EMIShielding [label="EMI Shielding", shape=note, style=filled, fillcolor=lightyellow];
+
+    // Recovery barriers (right side)
+    EmergencyPlan [label="Emergency Response Plan", shape=note, style=filled, fillcolor=orange];
+    DataBackup [label="Data Backup & Restore", shape=note, style=filled, fillcolor=lightblue];
+    ServiceRecovery [label="Rapid Service Recovery", shape=note, style=filled, fillcolor=lightblue];
+    PatientMonitoring [label="Patient Monitoring", shape=note, style=filled, fillcolor=lightblue];
+
+    // Threats to preventive barriers
+    PowerOutage -> BackupGenerator;
+    BatteryDepleted -> BatteryMaintenance;
+    PowerSupplyUnit -> RedundantPSU;
+    SensorFailure -> SensorMonitoring;
+    CircuitFailure -> PCBQuality;
+    ActuatorFailure -> ActuatorRedundancy;
+    IncorrectSetup -> SetupChecklist;
+    Misuse -> UserInstructions;
+    LackOfTraining -> TrainingProgram;
+    FirmwareBug -> CodeReview;
+    DataCorruption -> DataChecks;
+    UpdateFailure -> UpdateRollback;
+    Overheating -> ThermalMgmt;
+    Moisture -> SealedEnclosure;
+    EMI -> EMIShielding;
+
+    // Threats to intermediates (fault tree left)
+    PowerOutage -> PowerFailure;
+    BatteryDepleted -> PowerFailure;
+    PowerSupplyUnit -> PowerFailure;
+
+    SensorFailure -> ComponentFailure;
+    CircuitFailure -> ComponentFailure;
+    ActuatorFailure -> ComponentFailure;
+
+    IncorrectSetup -> UserError;
+    Misuse -> UserError;
+    LackOfTraining -> UserError;
+
+    FirmwareBug -> SoftwareError;
+    DataCorruption -> SoftwareError;
+    UpdateFailure -> SoftwareError;
+
+    Overheating -> Environmental;
+    Moisture -> Environmental;
+    EMI -> Environmental;
+
+    // Intermediates to top event
+    PowerFailure -> Failure;
+    ComponentFailure -> Failure;
+    UserError -> Failure;
+    SoftwareError -> Failure;
+    Environmental -> Failure;
+
+    // Top event to consequences
+    Failure -> PatientHarm;
+    Failure -> DataLoss;
+    Failure -> ServiceInterruption;
+
+    // Recovery barriers to consequences
+    PatientHarm -> EmergencyPlan;
+    PatientHarm -> PatientMonitoring;
+    DataLoss -> DataBackup;
+    ServiceInterruption -> ServiceRecovery;
+
+    // Grouping for bowtie shape
+    {rank=same; PowerOutage; BatteryDepleted; PowerSupplyUnit; SensorFailure; CircuitFailure; ActuatorFailure; IncorrectSetup; Misuse; LackOfTraining; FirmwareBug; DataCorruption; UpdateFailure; Overheating; Moisture; EMI;}
+    {rank=same; BackupGenerator; BatteryMaintenance; RedundantPSU; SensorMonitoring; PCBQuality; ActuatorRedundancy; SetupChecklist; UserInstructions; TrainingProgram; CodeReview; DataChecks; UpdateRollback; ThermalMgmt; SealedEnclosure; EMIShielding;}
+    {rank=same; Failure;}
+    {rank=same; PatientHarm; DataLoss; ServiceInterruption;}
+    {rank=same; EmergencyPlan; PatientMonitoring; DataBackup; ServiceRecovery;}
+}
+
+digraph FaultTreeANDOR {
+    rankdir=LR;
+    node [shape=box];
+
+    // Basic events
+    PowerOutage [label="Power Outage"];
+    BatteryFailure [label="Battery Failure"];
+    PSUFailure [label="Power Supply Unit Failure"];
+    SensorFailure [label="Sensor Failure"];
+    SoftwareCrash [label="Software Crash"];
+
+    // Gates (AND/OR) - changed to larger hexagon shape for label fit
+    AND1 [label="AND", shape=hexagon, style=filled, fillcolor=lightgrey, width=0.7, height=0.5, fixedsize=true];
+    OR1 [label="OR", shape=hexagon, style=filled, fillcolor=lightgrey, width=0.7, height=0.5, fixedsize=true];
+    OR2 [label="OR", shape=hexagon, style=filled, fillcolor=lightgrey, width=0.7, height=0.5, fixedsize=true];
+
+    // Top event
+    DeviceFailure [label="Medical Device Failure", shape=ellipse, style=filled, fillcolor=red];
+
+    // Structure
+    // OR gate: any power failure causes device failure
+    PowerOutage -> OR1;
+    BatteryFailure -> OR1;
+    PSUFailure -> OR1;
+
+    // AND gate: both sensor failure AND software crash must occur together
+    SensorFailure -> AND1;
+    SoftwareCrash -> AND1;
+
+    // Top event: device fails if either (any power failure) OR (both sensor and software fail)
+    OR1 -> OR2;
+    AND1 -> OR2;
+
+    OR2 -> DeviceFailure;
+}

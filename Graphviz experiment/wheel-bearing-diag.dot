@@ -1,0 +1,38 @@
+
+/**
+ * Diagnoses whether a car has a failed wheel bearing.
+ *
+ * This process involves the following steps:
+ * 1. Listen for unusual noises: Drive the car at various speeds and listen for humming, grinding, or growling noises that increase with speed or change when turning.
+ * 2. Check for wheel play: With the car safely lifted, grasp the wheel at the 12 and 6 o'clock positions and attempt to rock it. Excessive play
+ * 3. Inspect for uneven tire wear: Examine the tires for abnormal or uneven wear patterns, which can be a symptom of a failing wheel bearing.
+ * 4. Feel for vibration: While driving, note any unusual vibrations or wobbling sensations coming from the wheels.
+ * 5. Check for ABS warning lights: Some vehicles may trigger an ABS warning if a wheel bearing with an integrated sensor fails.
+ * 6. Confirm by rotating the wheel: Spin the wheel by hand (when lifted) and listen for grinding or roughness, which can indicate bearing failure.
+ *
+ * If any of these symptoms are present, further inspection or replacement of the wheel bearing may be necessary.
+ */
+
+
+digraph WheelBearingDiagnosis {
+    rankdir=TB;
+    node [shape=box, style=rounded];
+
+    Start [label="Start Diagnosis", shape=ellipse, style=filled, color=lightblue];
+    Listen [label="Listen for unusual noises"];
+    WheelPlay [label="Check for wheel play"];
+    TireWear [label="Inspect for uneven tire wear"];
+    Vibration [label="Feel for vibration"];
+    ABS [label="Check for ABS warning lights"];
+    Rotate [label="Rotate wheel and listen for grinding"];
+    Symptoms [label="Any symptoms present?"];
+    Inspect [label="Further inspection or replacement needed", shape=box, style=filled, color=orange];
+    End [label="No further action", shape=ellipse, style=filled, color=lightgrey];
+
+    Start -> Listen -> WheelPlay -> TireWear -> Vibration -> ABS -> Rotate -> Symptoms;
+    Symptoms -> Inspect [label="Yes"];
+    Symptoms -> End [label="No"];
+}
+// This code represents a flowchart for diagnosing a car's wheel bearing issues.
+// The flowchart starts with the "Start Diagnosis" node and proceeds through various checks and inspections.
+

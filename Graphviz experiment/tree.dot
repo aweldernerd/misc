@@ -1,0 +1,33 @@
+digraph FaultTree {
+    rankdir=BT;
+    node [shape=ellipse];
+
+    // Top-level fault
+    TopFault [label="System Failure", shape=box, style=filled, color=red];
+
+    // Intermediate events
+    PF [label="Power Failure", shape=octagon];
+    HF [label="Hardware Failure", shape=octagon];
+    SF [label="Software Failure", shape=octagon];
+
+    // Logic Gates
+    And1 [label="AND", shape=house];
+    Or1 [label="OR", shape=triangle];
+    
+    // Basic events
+    Basic1 [label="Battery Depleted"];
+    Basic2 [label="Generator Malfunction"];
+    Basic3 [label="CPU Overheat"];
+    Basic4 [label="Memory Corruption"];
+    Basic5 [label="Bug in Code"];
+
+    // Connections
+    {Basic1 Basic2} -> PF;
+    {Basic3 Basic4} -> HF;
+    Basic5 -> SF;
+    {SF, HF} -> And1;
+    {PF} -> Or1;
+    Or1 -> TopFault;
+    And1 -> Or1;
+
+}
